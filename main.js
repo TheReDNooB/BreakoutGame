@@ -5,6 +5,8 @@ const scoreSpan = document.querySelector('#scoreSpan');
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
+let score=0;
+
 const player = {
     x: 270,
     y: 360,
@@ -35,6 +37,7 @@ const brick = {
     visible: true,
 }
 
+let brickLength = bricks.rows * bricks.cols;
 const bricksArr = [];
 
 for(let i = 0; i < bricks.rows; i++){
@@ -80,23 +83,44 @@ function movePlayer(){
     if (player.x >= 600 - player.w) player.x = 600 - player.w;
 }
 
-// function moveBall(){
-//     ball.x += ball.dx;
-//     ball.y -= ball.dy;
+function moveBall(){
+    ball.x += ball.dx;
+    ball.y -= ball.dy;
 
-//     if(ball.x + ball.radius >= 600 || ball.x <= ball.radius) ball.dx = -ball.dx;
-//     if(ball.y <= 0 || ball.y + ball.radius >= 400) ball.dy = -ball.dy;
+    if(ball.x + ball.radius >= 600 || ball.x <= ball.radius) ball.dx = -ball.dx;
+    if(ball.y <= 0 || ball.y + ball.radius >= 400) ball.dy = -ball.dy;
 
-//     if(ball.x +ball.radius >= 600 > player.x &&
-//         ball.x <= player.x + player.w && ball.y + 
-//         ball.radius >= player.y){
-//             ball.dy = -ball.dy;
-//         }
-// }
+    if(ball.x + ball.radius > player.x && ball.x <= player.x + player.w && ball.y + ball.radius >= player.y){ ball.dy = -ball.dy;
+        }
+
+    bricksArr.forEach((col) => {
+        col.forEach((brick) => {
+            if(brick.visible === true){
+                checkBricksCollision(brick);
+            }
+        })
+    })
+}
+
+function checkBricksCollision(brick){
+    if(ball.x >= brick.x && ball.x + ball.radius <= brick.x + brick.w && ball.y + ball.radius >= brick.y && ball.y <= brick.y + brick.h){
+        ball.dy = -ball.dy;
+        brick.visible = false;
+
+        brickLength--;
+        updateScore();
+    }
+}
+
+function updateScore(){
+    scoreSpan.innerHTML = "";
+    score++;
+    scoreSpan.innerHTML = score
+}
 
 function update(){
     movePlayer();
-    // moveBall();
+    moveBall();
 }
 
 //--------------render--------------
