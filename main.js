@@ -13,6 +13,14 @@ const player = {
     dx: 5
 }
 
+const ball = {
+    x: 305,
+    y: 350,
+    radius: 7,
+    dx: 4,
+    dy: 9
+}
+
 function game(){
     update();
     render();
@@ -36,6 +44,17 @@ function renderPlayer(){
     context.closePath();
 }
 
+function renderBall(){
+    context.beginPath();
+
+    context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
+    context.fillStyle = "black";
+    context.fill();
+
+    context.closePath();
+}
+
 function render(){
     renderPlayer();
+    renderBall();
 }
