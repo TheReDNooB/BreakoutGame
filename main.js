@@ -59,8 +59,44 @@ function game(){
 }
 requestAnimationFrame(game);
 
-function update(){
+//--------------actions--------------
+let playerDiraction = " ";
 
+document.addEventListener('keydown', (e) => {
+    if(e.keyCode === 65) playerDiraction = "left";
+    if(e.keyCode === 68) playerDiraction = "right";
+})
+
+document.addEventListener('keyup', (e) => {
+    if(e.keyCode === 65) playerDiraction = "";
+    if(e.keyCode === 68) playerDiraction = "";
+})
+
+function movePlayer(){
+    if(playerDiraction === "left") player.x -= player.dx;
+    if(playerDiraction === "right") player.x += player.dx;
+
+    if(player.x <= 0) player.x = 0;
+    if (player.x >= 600 - player.w) player.x = 600 - player.w;
+}
+
+// function moveBall(){
+//     ball.x += ball.dx;
+//     ball.y -= ball.dy;
+
+//     if(ball.x + ball.radius >= 600 || ball.x <= ball.radius) ball.dx = -ball.dx;
+//     if(ball.y <= 0 || ball.y + ball.radius >= 400) ball.dy = -ball.dy;
+
+//     if(ball.x +ball.radius >= 600 > player.x &&
+//         ball.x <= player.x + player.w && ball.y + 
+//         ball.radius >= player.y){
+//             ball.dy = -ball.dy;
+//         }
+// }
+
+function update(){
+    movePlayer();
+    // moveBall();
 }
 
 //--------------render--------------
@@ -99,6 +135,8 @@ function renderBricks(){
 }
 
 function render(){
+    context.clearRect(0,0, canvas.width, canvas.height);
+
     renderPlayer();
     renderBall();
     renderBricks();
