@@ -118,9 +118,16 @@ function updateScore(){
     scoreSpan.innerHTML = score
 }
 
+function checkLoose(){
+    if(ball.x + ball.radius >= 400){
+        location.reload();
+    }
+}
+
 function update(){
     movePlayer();
     moveBall();
+    checkLoose();
 }
 
 //--------------render--------------
