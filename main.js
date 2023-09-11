@@ -124,10 +124,19 @@ function checkLoose(){
     }
 }
 
+function checkWin(){
+    if(brickLength <= 9){
+        alert("Yuo won");
+        brickLength = bricks.cols * bricks.rows;
+        localStorage.reload();
+    }
+}
+
 function update(){
     movePlayer();
     moveBall();
     checkLoose();
+    checkWin();
 }
 
 //--------------render--------------
